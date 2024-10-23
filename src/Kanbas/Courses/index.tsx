@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes, useParams } from "react-router";
+import { Navigate, Route, Routes, useParams, useLocation } from "react-router";
 import CoursesNavigation from "./Navigation";
 import Modules from "./Modules";
 import Home from "./Home";
@@ -10,40 +10,28 @@ import { courses } from "../Database";
 
 export default function Courses() {
   const { cid } = useParams();
-  const links = ["Home", "Modules", "Piazza", "Zoom", "Assignments", "Quizzes", "Grades", "People"];
   const course = courses.find((course) => course._id === cid);
+  const { pathname } = useLocation();
   return (
     <div id="wd-courses">
       <h2 className="text-danger">
-        <FaAlignJustify className="me-4 fs-4 mb-1" />
-        {course && course.name}
-      </h2>
-
-      <nav>
-        <ul>
-          {links.map((link) => {
-            const path = createPath(link);
-            const isActive = location.pathname === path;
-
-            return (
-              <li key={link}>
-                <Link
-                  to={path}
-                  className={isActive ? "active" : ""}
-                  style={{
-                    fontWeight: isActive ? "bold" : "normal",
-                    textDecoration: isActive ? "underline" : "none",
-                  }}
-                >
-                  {link}
-                </Link>
-              </li>
-            );
-          }
-          )
-          }
-        </ul>
-      </nav>
+        <FaAlignJustify className="me-4 fs-4 mb-1" /> 
+        {course && course.name} &gt; {pathname.split("/")[4]}
+        </h2><hr />
+      <div className="d-flex">
+        <div className="d-none d-md-block">
+          <CoursesNavigation />
+        </div>
+        <div className="flex-fill">
+          <Routes>
+            <Route path="Home" element={<Home />} />
+            <Route path="Modules" element={<Modules />} />
+            <Route path="Assignments" element={<Assignments />} />
+            <Route path="Assignments/:aid" element={<AssignmentEditor />} />
+            <Route path="People" element={<PeopleTable />} />
+          </Routes>
+        </div>
+      </div>
     </div>
   );
 }
