@@ -1,4 +1,15 @@
+import { Link, useParams } from 'react-router-dom';
+import { assignments } from "../../Database";
+
 export default function AssignmentEditor() {
+    const { assignmentId, cid } = useParams();
+
+    const assignment = assignments.find((assignment) => assignment._id === assignmentId);
+
+    if (!assignment) {
+        return <p>No assignment found!</p>
+    }
+
     return (
         <div id="wd-assignment-editor" className="container">
             <div className="mb-3 row">
@@ -8,7 +19,7 @@ export default function AssignmentEditor() {
                         type="text"
                         id="wd-assignment-name"
                         className="form-control"
-                        placeholder="A1"
+                        placeholder={assignment.title}
                     />
                 </div>
             </div>
@@ -142,238 +153,26 @@ export default function AssignmentEditor() {
                     </div>
                 </div>
             </div>
-
+            <div className="d-flex float-end pb-2">
+                <button id="wd-cancel-assignment" className="btn btn-lg btn-secondary me-1 float-end">
+                <Link
+                          to={`/Kanbas/Courses/${cid}/Assignments/`}
+                          id={`wd-assignment-${cid}-link`}
+                          className="text-decoration-none text-black"
+                        >
+                          Cancel
+                        </Link>
+                </button>
+                <button id="wd-save-assignment" className="btn btn-lg btn-danger me-1 float-end">
+                <Link
+                          to={`/Kanbas/Courses/${cid}/Assignments/`}
+                          id={`wd-assignment-${cid}-link`}
+                          className="text-decoration-none text-white"
+                        >
+                          Save
+                        </Link>
+                </button>
+            </div>
         </div>
     );
 }
-
-
-
-
-{/* <div>
-<label htmlFor="wd-submission-type">Online Entry Options</label>
-<br />
-<input type="checkbox" name="check-entry-options" id="wd-text-entry" />
-<label htmlFor="wd-text-entry">Text Entry</label><br />
-
-<input type="checkbox" name="check-entry-options" id="wd-website-url" />
-<label htmlFor="wd-website-url">Website URL</label><br />
-
-<input type="checkbox" name="check-entry-options" id="wd-media-recordings" />
-<label htmlFor="wd-media-recordings">Media Recordings</label><br />
-
-<input type="checkbox" name="check-entry-options" id="wd-student-annotation" />
-<label htmlFor="wd-student-annotation">Student Annotation</label><br />
-
-<input type="checkbox" name="check-entry-options" id="wd-file-upload" />
-<label htmlFor="wd-file-upload">File Uploads</label><br />
-</div> */}
-
-
-
-
-
-// export default function AssignmentEditor() {
-//     return (
-//         <div id="wd-assignments-editor">
-//             <label htmlFor="wd-name">Assignment Name</label>
-//             <input id="wd-name" value="A1 - ENV + HTML" /><br /><br />
-//             <textarea id="wd-description">
-//                 The assignment is available online Submit a link to the landing page of
-//             </textarea>
-//             <br />
-//             <table>
-//                 <tr>
-//                     <td align="right" valign="top">
-//                         <label htmlFor="wd-points">Points</label>
-//                     </td>
-//                     <td>
-//                         <input id="wd-points" value={100} />
-//                     </td>
-//                 </tr>
-//                 <tr>
-//                     <td align="right" valign="top">
-//                         <label htmlFor="wd-group">Assignment Group</label>
-//                     </td>
-//                     <td>
-//                         <select id="wd-group" name="wd-group">
-//                             <option>ASSIGNMENTS</option>
-//                         </select>
-//                     </td>
-//                 </tr>
-//                 <tr>
-//                     <td align="right" valign="top">
-//                         <label htmlFor="wd-display-grade-as">Display Grade as</label>
-//                     </td>
-//                     <td>
-//                         <select id="wd-display-grade-as" name="wd-display-grade-as">
-//                             <option>Percentage</option>
-//                         </select>
-//                     </td>
-//                 </tr>
-//                 <tr>
-//                     <td align="right" valign="top">
-//                         <label htmlFor="wd-submission-type">Submission Type</label>
-//                     </td>
-//                     <td>
-//                         <select id="wd-submission-type" name="wd-submission-type">
-//                             <option>Online</option>
-//                         </select>
-//                         <br />
-//                         <label htmlFor="wd-submission-type">Online Entry Options</label>
-//                         <br />
-//                         <input type="checkbox" name="check-entry-options" id="wd-text-entry" />
-//                         <label htmlFor="wd-text-entry">Text Entry</label><br />
-
-//                         <input type="checkbox" name="check-entry-options" id="wd-website-url" />
-//                         <label htmlFor="wd-website-url">Website URL</label><br />
-
-//                         <input type="checkbox" name="check-entry-options" id="wd-media-recordings" />
-//                         <label htmlFor="wd-media-recordings">Media Recordings</label><br />
-
-//                         <input type="checkbox" name="check-entry-options" id="wd-student-annotation" />
-//                         <label htmlFor="wd-student-annotation">Student Annotation</label><br />
-
-//                         <input type="checkbox" name="check-entry-options" id="wd-file-upload" />
-//                         <label htmlFor="wd-file-upload">File Uploads</label><br />
-//                     </td>
-//                 </tr>
-//                 <tr>
-//                     <td align="right" valign="top">
-//                         <label htmlFor="wd-assign-to">Assign to</label>
-//                     </td>
-//                     <td>
-//                         <input id="wd-assign-to" value="Everyone" />
-//                     </td>
-//                 </tr>
-//                 <tr>
-//                     <td align="right" valign="top">
-//                         <label htmlFor="wd-due-date">Due</label>
-//                     </td>
-//                     <td>
-//                         <input type="date"
-//                             id="wd-due-date"
-//                             value="2024-05-13" />
-//                     </td>
-//                 </tr>
-//                 <tr>
-//                         <td align="right" valign="top">
-//                             <label htmlFor="wd-available-from">Available from</label>
-//                         </td>
-//                         <td>
-//                             <input type="date" id="wd-available-from" value="2024-05-06" />
-//                         </td>
-//                         <td align="right" valign="top">
-//                             <label htmlFor="wd-available-until">Until</label>
-//                         </td>
-//                         <td>
-//                             <input type="date" id="wd-available-until" value="2024-05-20" />
-//                         </td>
-//                     </tr>
-//             </table>
-//             <hr />
-//             <button>Cancel</button><button>Save</button>
-//         </div>
-//     );
-// }
-
-// export default function AssignmentEditor() {
-//     return (
-//         <div id="wd-assignments-editor" className="p-3">
-//             {/* Assignment Name */}
-//             <div className="d-flex mb-2 justify-content-end">
-//                 <label htmlFor="wd-name" className="form-label me-2" style={{ width: '200px' }}>Assignment Name</label>
-//                 <input id="wd-name" className="form-control flex-fill float-end" value="A1 - ENV + HTML" />
-//             </div>
-
-//             {/* Assignment Description */}
-//             <div className="d-flex mb-2 justify-content-end">
-//                 <label htmlFor="wd-description" className="form-label me-2" style={{ width: '200px' }}>Assignment Description</label>
-//                 <textarea id="wd-description" className="form-control flex-fill float-end">
-//                     The assignment is available online. Submit a link to the landing page.
-//                 </textarea>
-//             </div>
-
-//             {/* Points */}
-//             <div className="d-flex mb-2 justify-content-end">
-//                 <label htmlFor="wd-points" className="form-label me-2" style={{ width: '200px' }}>Points</label>
-//                 <input id="wd-points" className="form-control flex-fill float-end" value={100} />
-//             </div>
-
-//             {/* Assignment Group */}
-//             <div className="d-flex mb-2 justify-content-end">
-//                 <label htmlFor="wd-group" className="form-label me-2" style={{ width: '200px' }}>Assignment Group</label>
-//                 <select id="wd-group" className="form-select flex-fill float-end">
-//                     <option>ASSIGNMENTS</option>
-//                 </select>
-//             </div>
-
-//             {/* Display Grade As */}
-//             <div className="d-flex mb-2 justify-content-end">
-//                 <label htmlFor="wd-display-grade-as" className="form-label me-2" style={{ width: '200px' }}>Display Grade As</label>
-//                 <select id="wd-display-grade-as" className="form-select flex-fill float-end">
-//                     <option>Percentage</option>
-//                 </select>
-//             </div>
-
-//             {/* Submission Type and bordered box */}
-//             <div className="d-flex align-items-center mb-3">
-//                 <label htmlFor="wd-submission-type" className="form-label me-2" style={{ width: '200px' }}>Submission Type</label>
-//                 <div className="border p-3 flex-fill">
-//                     <div className="d-flex justify-content-end">
-//                         <select id="wd-submission-type" className="form-select flex-fill float-end">
-//                             <option>Online</option>
-//                         </select>
-//                     </div>
-
-//                     <div className="mt-3">
-//                         <label className="form-label">Online Entry Options</label><br />
-//                         <input type="checkbox" id="wd-text-entry" />
-//                         <label htmlFor="wd-text-entry" className="ms-1">Text Entry</label><br />
-
-//                         <input type="checkbox" id="wd-website-url" />
-//                         <label htmlFor="wd-website-url" className="ms-1">Website URL</label><br />
-
-//                         <input type="checkbox" id="wd-media-recordings" />
-//                         <label htmlFor="wd-media-recordings" className="ms-1">Media Recordings</label><br />
-
-//                         <input type="checkbox" id="wd-student-annotation" />
-//                         <label htmlFor="wd-student-annotation" className="ms-1">Student Annotation</label><br />
-
-//                         <input type="checkbox" id="wd-file-upload" />
-//                         <label htmlFor="wd-file-upload" className="ms-1">File Uploads</label><br />
-//                     </div>
-//                 </div>
-//             </div>
-
-//             {/* Assign To */}
-//             <div className="d-flex mb-2 justify-content-end">
-//                 <label htmlFor="wd-assign-to" className="form-label me-2" style={{ width: '200px' }}>Assign To</label>
-//                 <input id="wd-assign-to" className="form-control flex-fill float-end" value="Everyone" />
-//             </div>
-
-//             {/* Due Date */}
-//             <div className="d-flex mb-2 justify-content-end">
-//                 <label htmlFor="wd-due-date" className="form-label me-2" style={{ width: '200px' }}>Due Date</label>
-//                 <input type="date" id="wd-due-date" className="form-control flex-fill float-end" value="2024-05-13" />
-//             </div>
-
-//             {/* Availability Dates */}
-//             <div className="d-flex mb-2 justify-content-end">
-//                 <label htmlFor="wd-available-from" className="form-label me-2" style={{ width: '200px' }}>Available From</label>
-//                 <input type="date" id="wd-available-from" className="form-control me-2 float-end" value="2024-05-06" />
-
-//                 <label htmlFor="wd-available-until" className="form-label me-2" style={{ width: '200px' }}>Available Until</label>
-//                 <input type="date" id="wd-available-until" className="form-control float-end" value="2024-05-20" />
-//             </div>
-
-//             <hr />
-
-//             {/* Buttons */}
-//             <div className="d-flex justify-content-end">
-//                 <button className="btn btn-secondary me-2 float-end">Cancel</button>
-//                 <button className="btn btn-primary float-end">Save</button>
-//             </div>
-//         </div>
-//     );
-// }
