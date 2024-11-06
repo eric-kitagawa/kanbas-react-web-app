@@ -1,6 +1,6 @@
 import React from "react";
-import TodoForm from "./ToDoForm";
-import TodoItem from "./ToDoItem";
+import TodoForm from "./TodoForm";
+import TodoItem from "./TodoItem";
 import { useSelector } from "react-redux";
 export default function TodoList() {
   const { todos } = useSelector((state: any) => state.todosReducer);
