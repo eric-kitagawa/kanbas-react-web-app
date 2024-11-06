@@ -4,11 +4,12 @@ import TOC from "./TOC";
 import Lab2 from "./Lab2";
 import Lab3 from "./Lab3";
 export default function Labs() {
-return (
+  console.log('Hello World!');
+  return (
     <div id="wd-labs">
-        <h1>Labs</h1>
-        <p>Created by Eric Kitagawa</p>
-        <TOC />
+      <h1>Labs</h1>
+      <h2>Eric Kitagawa</h2>
+      <TOC />
       <Routes>
         <Route path="/" element={<Navigate to="Lab1" />} />
         <Route path="Lab1" element={<Lab1 />} />
@@ -16,5 +17,5 @@ return (
         <Route path="Lab3" element={<Lab3 />} />
       </Routes>
     </div>
-);
+  );
 }

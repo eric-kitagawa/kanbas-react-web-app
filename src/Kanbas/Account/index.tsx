@@ -1,5 +1,5 @@
 import Signin from "./Signin";
-import AccountNavigation from "../Navigation";
+import Navigation from "./Navigation";
 import Signup from "./Signup";
 import Profile from "./Profile";
 import { Routes, Route, Navigate } from "react-router";
@@ -9,7 +9,7 @@ export default function Account() {
       <table>
         <tr>
           <td valign="top">
-            <AccountNavigation />
+            <Navigation />
           </td>
           <td valign="top">
             <Routes>
