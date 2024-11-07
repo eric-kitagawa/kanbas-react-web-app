@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addTodo, updateTodo, setTodo } from "./todosReducer";
 
 export default function TodoForm() {
+    
   const { todo } = useSelector((state: any) => state.todosReducer);
   const dispatch = useDispatch();
   return (
@@ -12,7 +13,7 @@ export default function TodoForm() {
       <button onClick={() => dispatch(updateTodo(todo))}
               id="wd-update-todo-click"> Update </button>
       <input
-        value={todo.title}
+        defaultValue={todo.title}
         onChange={(e) => dispatch(setTodo({ ...todo, title: e.target.value }))}/>
     </li>
 );}
