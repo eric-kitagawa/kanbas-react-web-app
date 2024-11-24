@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import * as db from "./Database";
 export default function Dashboard({
   courses,
   course,
@@ -18,14 +17,9 @@ export default function Dashboard({
   updateCourse: () => void;
 }) {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
-  const { enrollments } = db;
 
   if (!currentUser) {
     return <p>Please log in to see your courses.</p>;
-  }
-
-  if (!enrollments) {
-    return <p>Loading enrollments...</p>;
   }
 
   return (
@@ -68,18 +62,6 @@ export default function Dashboard({
       <div id="wd-dashboard-courses" className="row">
         <div className="row row-cols-1 row-cols-md-5 g-4">
           {courses
-            .filter((course) => {
-              const isEnrolled = enrollments.some(
-                (enrollment) =>
-                  enrollment.user === currentUser._id &&
-                  enrollment.course === course._id
-              );
-              // Log the filtering process
-              console.log(
-                `Course ID: ${course._id}, User: ${currentUser._id}, Is Enrolled: ${isEnrolled}`
-              );
-              return isEnrolled;
-            })
             .map((course) => (
               <div
                 key={course._id}

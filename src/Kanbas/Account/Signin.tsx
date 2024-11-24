@@ -10,13 +10,21 @@ export default function Signin() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const signin = async () => {
-    const user =  await client.signin(credentials);
+    try {
+      console.log("Attempting to sign in with credentials:", credentials);
+      const user = await client.signin(credentials);
 
-    if (!user) return;
-    dispatch(setCurrentUser(user));
-    navigate("/Kanbas/Dashboard");
+      if (!user) {
+        console.error("No user returned from signin API");
+        return;
+      }
+
+      dispatch(setCurrentUser(user));
+      navigate("/Kanbas/Dashboard");
+    } catch (error) {
+      alert("Failed to sign in. Please check your username and password.");
+    }
   };
-
   return (
     <div id="wd-signin-screen">
       <h1>Sign in</h1>
