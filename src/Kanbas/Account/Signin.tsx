@@ -9,22 +9,14 @@ export default function Signin() {
   const [credentials, setCredentials] = useState<any>({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const signin = async () => {
-    try {
-      console.log("Attempting to sign in with credentials:", credentials);
-      const user = await client.signin(credentials);
-
-      if (!user) {
-        console.error("No user returned from signin API");
-        return;
-      }
-
-      dispatch(setCurrentUser(user));
-      navigate("/Kanbas/Dashboard");
-    } catch (error) {
-      alert("Failed to sign in. Please check your username and password.");
-    }
+    const user = await client.signin(credentials);
+    if (!user) return;
+    dispatch(setCurrentUser(user));
+    navigate("/Kanbas/Dashboard");
   };
+
   return (
     <div id="wd-signin-screen">
       <h1>Sign in</h1>
@@ -38,9 +30,13 @@ export default function Signin() {
         id="wd-password"
         placeholder="password" type="password"
         className="form-control mb-2" />
-      <button onClick={signin} id="wd-signin-btn"
-        className="btn btn-primary w-100">
-        Sign in </button>
+      <button
+        onClick={signin}
+        id="wd-signin-btn"
+        className="btn btn-primary w-100"
+      >
+        Sign in
+      </button>
       <Link id="wd-signup-link" to="/Kanbas/Account/Signup">Sign up</Link>
     </div>
   );

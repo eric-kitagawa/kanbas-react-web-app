@@ -1,28 +1,45 @@
-import { FaPlus } from "react-icons/fa6";
-import { FaMagnifyingGlass } from "react-icons/fa6";
-export default function AssignmentControls() {
-    return (
-        <div id="wd-modules-controls" className="d-flex justify-content-between align-items-center text-nowrap">
-            <div className="input-group" style={{ width: '300px' }}>
-                <span className="input-group-text">
-                    <FaMagnifyingGlass />
-                </span>
-                <input
-                    id="wd-search"
-                    className="form-control"
-                    type="search"
-                    placeholder="Search..."
-                />
-            </div>
-            <div className="d-flex">
-                <button id="wd-add-assignment" className="btn btn-lg btn-danger me-1 float-end">
-                    <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
-                    Assignment</button>
-                <button id="wd-collapse-all" className="btn btn-lg btn-secondary me-1 float-end">
-                    <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
-                    Group
-                </button>
-            </div>
-        </div >
-    );
+import { FaSearch } from "react-icons/fa";
+import { IoEllipsisVertical } from "react-icons/io5";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useParams } from "react-router";
+export default function AssignmentsControls() {
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const isFaculty = currentUser?.role === "FACULTY";
+  const navigate = useNavigate();
+  const { cid } = useParams();
+  return (
+    <div className="d-flex justify-content-between mb-4">
+      <div className="input-group w-50">
+        <span className="input-group-text bg-light">
+          <FaSearch />
+        </span>
+        <input
+          type="text"
+          className="form-control"
+          id="wd-search-assignment"
+          placeholder="Search for Assignment"
+        />
+      </div>
+      {isFaculty && (
+        <div>
+          <button className="btn wd-add-assignment-group btn-secondary me-2">
+            + Group
+          </button>
+          <div className="wd-button float-end">
+            <button
+              onClick={() => navigate(`/Kanbas/Courses/${cid}/Assignments/new`)}
+              className="btn wd-add-assignment btn-danger me-2"
+            >
+              + Assignment
+            </button>
+            <button className="btn wd-add-assignment-group btn-secondary ">
+              {" "}
+              <IoEllipsisVertical className="fs-4" />{" "}
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
